@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class BattleManagerScript : MonoBehaviour
 {
     bool passTurn = false;
-    bool selectAttack = false;
     public Player player;
     public Enemy enemy;
     public Slider playerHealthUI;
@@ -14,11 +13,14 @@ public class BattleManagerScript : MonoBehaviour
     public GameObject battleMenu;
     public GameObject fightMenu;
     public GameObject victory;
+    public GameObject defeat;
 
     float timer = 0;
     // Start is called before the first frame update
     void Start()
     {
+        //TODO: This is placeholder. Ideally player hp will be constant,
+        //enemy HP will be set based on the encounter. For testing purposes, this is fine.
         player.HP = 100;
         player.priority = true;
         enemy.HP = 50;
@@ -28,15 +30,27 @@ public class BattleManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //If player has no remaining HP, end the game.
+        if(player.HP <= 0){
+            battleMenu.SetActive(false);
+            defeat.SetActive(true);
+        }
+        //If the player has moved, set the enemy's health bart and disable the fightMenu
+        if(player.priority == false){
+            fightMenu.SetActive(false);
+            moveSlider(enemyHealthUI, enemy.HP);
+        }
+        //If the fightMenu is gone and the player no longer has priority, the enemy takes their turn.
+        //If the enemy has no hp remaining, end the encounter.
         if(fightMenu.activeInHierarchy == false){  
             if(enemy.HP > 0){
-
-                    if(passTurn == true){
-                        enemyTurn();
-                        player.priority=true;
-                    }
-                
+                if(player.priority == false){
+                    enemyTurn();
+                    player.priority=true;
+                }   
             }
+            //TODO: Should change scene back to the overworld.
             else{
                 victory.SetActive(true);
                 battleMenu.SetActive(false);
@@ -46,66 +60,22 @@ public class BattleManagerScript : MonoBehaviour
     }
     void enemyTurn(){
         player.takeDamage(enemy.ATK);
-        moveSlider(playerHealthUI, enemy.ATK);
+        moveSlider(playerHealthUI, player.HP);
         passTurn = false;
         battleMenu.SetActive(true);
         Debug.Log(player.HP);
 
     }
     public void playerAttacking(){
-        selectAttack = true;
         battleMenu.SetActive(false);
         fightMenu.SetActive(true);
     }   
-    public void useAttack(int attackID){
-        enemy.HP = enemy.HP - player.attacks[attackID].damage;
-        moveSlider(enemyHealthUI, player.attacks[attackID].damage);
-        fightMenu.SetActive(false);
-        passTurn = true;
-        selectAttack = false;
-    }
-    public void firstAction(){
-        if(player.attacks[0] != null){
-            enemy.HP = enemy.HP - player.attacks[0].damage;
-            moveSlider(enemyHealthUI, player.attacks[0].damage);
-            fightMenu.SetActive(false);
-            passTurn = true;
-            selectAttack = false;
-
-        }
-    }
-    public void secondAction(){
-        if(player.attacks[1] != null){
-            enemy.HP = enemy.HP - player.attacks[1].damage;
-            moveSlider(enemyHealthUI, player.attacks[1].damage);
-            fightMenu.SetActive(false);
-            passTurn = true;
-            selectAttack = false;
-
-        }
-    }
-    public void thirdAciton(){
-        if(player.attacks[2] != null){
-            enemy.HP = enemy.HP - player.attacks[2].damage;
-            moveSlider(enemyHealthUI, player.attacks[2].damage);
-            fightMenu.SetActive(false);
-            passTurn = true;
-            selectAttack = false;
-
-        }
-    }
     public void back(){
         fightMenu.SetActive(false);
         battleMenu.SetActive(true);
-        selectAttack = false;
-
     }
-    void moveSlider(Slider slider, int atkDmg){
-        slider.value = slider.value - atkDmg;
-    }
-    public void passEnemyTurn(){
-        back();
-        enemyTurn();
+    void moveSlider(Slider slider, int currentHP){
+        slider.value = currentHP;
     }
     
 }

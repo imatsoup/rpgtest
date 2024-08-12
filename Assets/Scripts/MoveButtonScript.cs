@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MoveButtonScript : MonoBehaviour
+public class MoveFill : MonoBehaviour
 {
     public Player player;
     public Enemy enemy;

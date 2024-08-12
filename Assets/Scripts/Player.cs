@@ -5,6 +5,7 @@ using UnityEngine;
 
 [Serializable]
 [CreateAssetMenu(fileName = "Player", menuName = "ScriptableObjects/Player", order = 1)]
+//Houses player fields and methods, primarily for scriptable object used in combat.
 public class Player : ScriptableObject
 {
     public int HP;
