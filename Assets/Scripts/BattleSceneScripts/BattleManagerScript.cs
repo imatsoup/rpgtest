@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BattleManagerScript : MonoBehaviour
 {
@@ -21,9 +22,9 @@ public class BattleManagerScript : MonoBehaviour
     {
         //TODO: This is placeholder. Ideally player hp will be constant,
         //enemy HP will be set based on the encounter. For testing purposes, this is fine.
-        player.HP = 100;
         player.priority = true;
-        enemy.HP = 50;
+        enemy.HP = 20;
+        playerHealthUI.value = player.HP;
         enemyHealthUI.maxValue = enemy.HP;
     }
 
@@ -36,11 +37,7 @@ public class BattleManagerScript : MonoBehaviour
             battleMenu.SetActive(false);
             defeat.SetActive(true);
         }
-        //If the player has moved, set the enemy's health bart and disable the fightMenu
-        if(player.priority == false){
-            fightMenu.SetActive(false);
-            moveSlider(enemyHealthUI, enemy.HP);
-        }
+
         //If the fightMenu is gone and the player no longer has priority, the enemy takes their turn.
         //If the enemy has no hp remaining, end the encounter.
         if(fightMenu.activeInHierarchy == false){  
@@ -54,7 +51,13 @@ public class BattleManagerScript : MonoBehaviour
             else{
                 victory.SetActive(true);
                 battleMenu.SetActive(false);
+                transition(100);
             }
+        }
+        //If the player has moved, set the enemy's health bar and disable the fightMenu
+        if(player.priority == false){
+            fightMenu.SetActive(false);
+            moveSlider(enemyHealthUI, enemy.HP);
         }
         
     }
@@ -74,8 +77,27 @@ public class BattleManagerScript : MonoBehaviour
         fightMenu.SetActive(false);
         battleMenu.SetActive(true);
     }
+    public void run(){
+        float escape = Random.Range(1, 100);
+        if(escape < 51){
+            transition(1);
+        }
+        else{
+            Debug.Log("Escape failed");
+            player.priority = false;
+        }
+    }
+
     void moveSlider(Slider slider, int currentHP){
         slider.value = currentHP;
+    }
+    void transition(float seconds){
+        // while(timer < seconds){
+        //     Debug.Log(timer);
+        //     timer+= Time.deltaTime;
+        // }
+        SceneManager.LoadScene("OverworldScene");
+
     }
     
 }

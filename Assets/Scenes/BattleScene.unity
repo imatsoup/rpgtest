@@ -364,7 +364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 219685712}
-  - component: {fileID: 219685711}
+  - component: {fileID: 219685713}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -372,26 +372,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &219685711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219685710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26359323a868749449dacfcd90fd7d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 11400000, guid: 827983d14b6cd8a47a29ab8186ba5a90, type: 2}
-  enemy: {fileID: 11400000, guid: 7a735771ad3c3d54485df379c7e743d8, type: 2}
-  playerHealthUI: {fileID: 1239690993}
-  enemyHealthUI: {fileID: 1841495241}
-  battleMenu: {fileID: 1757242244}
-  fightMenu: {fileID: 1217901358}
-  victory: {fileID: 1283773725}
-  defeat: {fileID: 278161067}
 --- !u!4 &219685712
 Transform:
   m_ObjectHideFlags: 0
@@ -409,6 +389,26 @@ Transform:
   - {fileID: 947925353}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &219685713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219685710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355e5d77e283cad41aca829079b35dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 11400000, guid: 827983d14b6cd8a47a29ab8186ba5a90, type: 2}
+  enemy: {fileID: 11400000, guid: 7a735771ad3c3d54485df379c7e743d8, type: 2}
+  playerHealthUI: {fileID: 1239690993}
+  enemyHealthUI: {fileID: 1841495241}
+  battleMenu: {fileID: 1757242244}
+  fightMenu: {fileID: 1217901358}
+  victory: {fileID: 1283773725}
+  defeat: {fileID: 278161067}
 --- !u!1 &278161067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 219685711}
+      - m_Target: {fileID: 219685713}
         m_TargetAssemblyTypeName: BattleManagerScript, Assembly-CSharp
         m_MethodName: playerAttacking
         m_Mode: 1
@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 219685711}
+      - m_Target: {fileID: 219685713}
         m_TargetAssemblyTypeName: BattleManagerScript, Assembly-CSharp
         m_MethodName: back
         m_Mode: 1
@@ -2175,7 +2175,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b358f1336fc68ec4998af9359c7eba3c, type: 3}
   m_Color: {r: 0.9622642, g: 0.4221253, b: 0.4221253, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2196,7 +2196,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.2465248, y: 0.9884264, z: 0.040706653}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 588293785}
@@ -3053,7 +3053,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1791393015}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 219685713}
+        m_TargetAssemblyTypeName: BattleManagerScript, Assembly-CSharp
+        m_MethodName: run
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1791393015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3839,7 +3851,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.2865248, y: -0.8215735, z: 0.040706653}
-  m_LocalScale: {x: 3.1103997, y: -1.7358954, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 588293785}
@@ -3885,8 +3897,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.37967035, g: 0.9716981, b: 0.2062567, a: 1}
+  m_Sprite: {fileID: 21300000, guid: bd0aef797454fcd4da5be6700c73b822, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3908,7 +3920,7 @@ GameObject:
   - component: {fileID: 2091609990}
   - component: {fileID: 2091609989}
   m_Layer: 5
-  m_Name: Textarea
+  m_Name: PlayerConsole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
