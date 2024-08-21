@@ -8,5 +8,4 @@ public class Attack : ScriptableObject
     public string name;
     public int damage;
     
-    
 }

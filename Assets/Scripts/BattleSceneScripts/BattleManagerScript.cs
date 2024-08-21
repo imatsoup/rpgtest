@@ -11,8 +11,10 @@ public class BattleManagerScript : MonoBehaviour
     public Enemy enemy;
     public Slider playerHealthUI;
     public Slider enemyHealthUI;
+    public Button openItemMenu;
     public GameObject battleMenu;
     public GameObject fightMenu;
+    public GameObject itemMenu;
     public GameObject victory;
     public GameObject defeat;
 
@@ -23,9 +25,13 @@ public class BattleManagerScript : MonoBehaviour
         //TODO: This is placeholder. Ideally player hp will be constant,
         //enemy HP will be set based on the encounter. For testing purposes, this is fine.
         player.priority = true;
+        player.HP = 100;
         enemy.HP = 20;
+        enemy.MaxHP = 20;
+        playerHealthUI.maxValue = player.MaxHP;
         playerHealthUI.value = player.HP;
         enemyHealthUI.maxValue = enemy.HP;
+        checkEmptyInventory();
     }
 
     // Update is called once per frame
@@ -36,11 +42,12 @@ public class BattleManagerScript : MonoBehaviour
         if(player.HP <= 0){
             battleMenu.SetActive(false);
             defeat.SetActive(true);
+            StartCoroutine("transitionToMainMenu", 3.5f);
         }
 
         //If the fightMenu is gone and the player no longer has priority, the enemy takes their turn.
         //If the enemy has no hp remaining, end the encounter.
-        if(fightMenu.activeInHierarchy == false){  
+        if(fightMenu.activeInHierarchy == false && itemMenu.activeInHierarchy == false){  
             if(enemy.HP > 0){
                 if(player.priority == false){
                     enemyTurn();
@@ -51,12 +58,15 @@ public class BattleManagerScript : MonoBehaviour
             else{
                 victory.SetActive(true);
                 battleMenu.SetActive(false);
-                transition(100);
+                StartCoroutine("transitionToOverworld", 3.5f);
             }
         }
-        //If the player has moved, set the enemy's health bar and disable the fightMenu
+        //If the player has moved, set the enemy's health bar and disable the fightMenu or itemMenu
         if(player.priority == false){
+            Debug.Log(itemMenu.activeInHierarchy);
             fightMenu.SetActive(false);
+            itemMenu.SetActive(false);
+            checkEmptyInventory();
             moveSlider(enemyHealthUI, enemy.HP);
         }
         
@@ -72,6 +82,14 @@ public class BattleManagerScript : MonoBehaviour
     public void playerAttacking(){
         battleMenu.SetActive(false);
         fightMenu.SetActive(true);
+    }
+    public void item(){
+        battleMenu.SetActive(false);
+        itemMenu.SetActive(true);
+    }
+    public void itemBack(){
+        itemMenu.SetActive(false);
+        battleMenu.SetActive(true);
     }   
     public void back(){
         fightMenu.SetActive(false);
@@ -80,7 +98,7 @@ public class BattleManagerScript : MonoBehaviour
     public void run(){
         float escape = Random.Range(1, 100);
         if(escape < 51){
-            transition(1);
+            StartCoroutine("transitionToOverworld", 1);
         }
         else{
             Debug.Log("Escape failed");
@@ -91,13 +109,19 @@ public class BattleManagerScript : MonoBehaviour
     void moveSlider(Slider slider, int currentHP){
         slider.value = currentHP;
     }
-    void transition(float seconds){
-        // while(timer < seconds){
-        //     Debug.Log(timer);
-        //     timer+= Time.deltaTime;
-        // }
+    IEnumerator transitionToOverworld(float seconds){
+        yield return new WaitForSeconds(seconds);
         SceneManager.LoadScene("OverworldScene");
-
+    }
+    IEnumerator transitionToMainMenu(float seconds){
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene("MainMenu");
+    }
+    void checkEmptyInventory(){
+        Debug.Log(player.items.Length);
+        if(player.items.Length < 1){
+            openItemMenu.interactable = false;
+        }
     }
     
 }

@@ -11,6 +11,7 @@ using UnityEngine;
 //a file that houses all the enemy information.
 public class Enemy : ScriptableObject
 {
+    public int MaxHP;
     public int HP;
     public int ATK;
     public Enemy(int hp, int atk){
@@ -19,5 +20,11 @@ public class Enemy : ScriptableObject
     }
     public void takeDamage(int atkDamage){
         HP = HP - atkDamage;
+    }
+    public void heal(int healVal){
+        HP = HP + healVal;
+        if(HP > MaxHP){
+            HP = MaxHP;
+        }
     }
 }

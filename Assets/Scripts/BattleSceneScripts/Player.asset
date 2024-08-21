@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e103ed8e18805d4e88171e633b03a8b, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  HP: 95
-  priority: 0
+  MaxHP: 100
+  HP: -9
+  priority: 1
   attacks:
   - {fileID: 11400000, guid: 9e9d1b5d3e5575a41ba01d0768dae0cc, type: 2}
   - {fileID: 11400000, guid: 0e871760935267c41897ef0c3cb3c5f7, type: 2}
   - {fileID: 11400000, guid: 1f88e2d70f46abf4fb88b66fe4965191, type: 2}
+  - {fileID: 11400000, guid: dd49d3e2b57ad3942a856f346c6a015e, type: 2}
+  items: []
