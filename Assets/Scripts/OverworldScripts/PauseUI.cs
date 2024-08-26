@@ -11,5 +11,8 @@ public class PauseUI : MonoBehaviour
     }
     public void back(){
         pauseUI.SetActive(false);
+        if(inventoryDisplay.activeInHierarchy){
+            inventoryDisplay.SetActive(false);
+        }
     }
 }
